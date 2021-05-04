@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:talk/src/screens/signup_profile.dart';
 
 import 'screens/login.dart';
 import 'screens/sign_up.dart';
@@ -12,7 +13,7 @@ class App extends StatelessWidget {
         fontFamily: 'Fira',
       ),
       title: 'talk',
-      home: LoginPage(),
+      home: SignUpPage(),
       onGenerateRoute: routes,
     );
   }
@@ -30,6 +31,11 @@ class App extends StatelessWidget {
       //login page
       return MaterialPageRoute(builder: (context) {
         return LoginPage();
+      });
+    } else if (routeName == '/signup/profile') {
+      //login page
+      return MaterialPageRoute(builder: (context) {
+        return SignUpProfile();
       });
     } else if (routeName == '/conversations') {
       //conversation home page
