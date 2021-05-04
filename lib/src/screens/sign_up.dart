@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../resources/flutter_fire_auth.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -12,6 +13,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: buildBody(),
     );
   }
@@ -90,7 +92,9 @@ class _SignUpPageState extends State<SignUpPage> {
           borderRadius: BorderRadius.circular(15.0),
           border: Border.all(color: Colors.purple[600])),
       child: MaterialButton(
-        onPressed: () {},
+        onPressed: () {
+          submitSignUp();
+        },
         child: Text('SIGN UP'),
       ),
     );
@@ -110,5 +114,52 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       ),
     );
+  }
+
+  void submitSignUp() async {
+    FocusScope.of(context).unfocus();
+    String email = emailController.text;
+    String password = passwordController.text;
+    if (email == '' || password == '') {
+      alertDialog(
+          'Error', 'Please ensure that you enter an email and password.');
+      return;
+    }
+    bool result = await signUp(email, password);
+    if (result) {
+      //change page
+      Navigator.pushReplacementNamed(context, '/signup/profile');
+    }
+  }
+
+  void alertDialog(String title, String message) {
+    AlertDialog alert = AlertDialog(
+      title: Text(
+        title,
+        style: TextStyle(fontSize: 20.0),
+      ),
+      content: Text(
+        message,
+        style: TextStyle(fontSize: 18.0),
+      ),
+      actions: [
+        TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Cancel')),
+        TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Continue')),
+      ],
+    );
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return alert;
+        });
   }
 }

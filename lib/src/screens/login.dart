@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../resources/flutter_fire_auth.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -12,6 +13,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: buildBody(context),
     );
   }
@@ -70,6 +72,7 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
       width: MediaQuery.of(context).size.width / 2.5,
       child: TextField(
+        obscureText: true,
         style: TextStyle(fontSize: 18.0),
         controller: passwordController,
         decoration: InputDecoration(
@@ -88,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
           borderRadius: BorderRadius.circular(15.0),
           border: Border.all(color: Colors.purple[600])),
       child: MaterialButton(
-        onPressed: () {},
+        onPressed: submitLogin,
         child: Text('LOGIN'),
       ),
     );
@@ -99,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
       width: MediaQuery.of(context).size.width / 3,
       height: 45,
       child: MaterialButton(
-        onPressed: () {},
+        onPressed: submitForgot,
         child: Text('Forgot your password?'),
       ),
     );
@@ -111,6 +114,7 @@ class _LoginPageState extends State<LoginPage> {
       height: 45,
       child: MaterialButton(
         onPressed: () {
+          FocusScope.of(context).unfocus();
           Navigator.pushReplacementNamed(context, '/signup');
         },
         child: Text(
@@ -119,5 +123,70 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  void submitLogin() async {
+    FocusScope.of(context).unfocus();
+    String email = emailController.text;
+    String password = passwordController.text;
+    if (email == null || password == null) {
+      alertDialog(
+          'Error', 'Please ensure that you enter an email and password.');
+      return;
+    }
+    bool result = await logIn(email, password);
+    if (result) {
+      //change page
+      print('logged in');
+    }
+  }
+
+  void submitForgot() async {
+    FocusScope.of(context).unfocus();
+    String email = emailController.text;
+    if (email == '') {
+      alertDialog('Error',
+          'Please ensure that you enter the email that you used to register.');
+      return;
+    }
+
+    bool result = await resetPassword(email);
+    if (result) {
+      final snackBar = SnackBar(
+        content: Text("Email to reset password sent successfully."),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
+
+  void alertDialog(String title, String message) {
+    AlertDialog alert = AlertDialog(
+      title: Text(
+        title,
+        style: TextStyle(fontSize: 20.0),
+      ),
+      content: Text(
+        message,
+        style: TextStyle(fontSize: 18.0),
+      ),
+      actions: [
+        TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Cancel')),
+        TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Continue')),
+      ],
+    );
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return alert;
+        });
   }
 }
