@@ -49,28 +49,27 @@ class _SignUpProfileState extends State<SignUpProfile> {
   }
 
   Widget showImage(context) {
-    String imagePath;
+    ImageProvider imageProvider;
 
     if (_image == null) {
-      imagePath = 'images/default_profile.png';
+      imageProvider = AssetImage('images/default_profile.png');
     } else {
-      imagePath = _image.path;
+      imageProvider = Image.file(_image).image;
     }
 
     return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(color: Colors.grey, width: 2.0),
-      ),
       child: GestureDetector(
         onTap: () {
           pickImage();
         },
         child: CircleAvatar(
-            //Image.file(_image).image,
-            backgroundImage: AssetImage(imagePath),
-            backgroundColor: Colors.transparent,
-            radius: 80.0),
+          radius: 85,
+          backgroundColor: Colors.blueGrey,
+          child: CircleAvatar(
+              backgroundImage: imageProvider,
+              backgroundColor: Colors.transparent,
+              radius: 80.0),
+        ),
       ),
     );
   }
