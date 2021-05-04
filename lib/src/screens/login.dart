@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
           border: Border.all(color: Colors.purple[600])),
       child: MaterialButton(
         onPressed: () {},
-        child: Text('SUBMIT'),
+        child: Text('LOGIN'),
       ),
     );
   }
@@ -110,7 +110,9 @@ class _LoginPageState extends State<LoginPage> {
       width: MediaQuery.of(context).size.width / 3,
       height: 45,
       child: MaterialButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushReplacementNamed(context, '/signup');
+        },
         child: Text(
           'Not a member? Sign Up',
           style: TextStyle(color: Colors.purple[600]),
