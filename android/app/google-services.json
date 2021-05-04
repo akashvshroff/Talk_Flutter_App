@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "463199907547",
+    "project_id": "talk-chat-app-66f32",
+    "storage_bucket": "talk-chat-app-66f32.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463199907547:android:9b68e8b22f8a1b7049a6fe",
+        "android_client_info": {
+          "package_name": "com.avs.talk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463199907547-irop6m3ib43c0k7lr24hg40cb728dss7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu1NhFjq-seJS_UutXLXjpodojxegd3fE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463199907547-irop6m3ib43c0k7lr24hg40cb728dss7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
