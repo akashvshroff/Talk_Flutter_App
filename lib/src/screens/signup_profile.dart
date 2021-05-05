@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import '../resources/flutter_fire_storage.dart';
+import '../resources/flutter_fire_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SignUpProfile extends StatefulWidget {
   @override
@@ -15,6 +18,7 @@ class _SignUpProfileState extends State<SignUpProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: buildBody(context),
     );
   }
@@ -36,7 +40,9 @@ class _SignUpProfileState extends State<SignUpProfile> {
           ),
           Spacer(),
           showImage(context),
-          Spacer(),
+          SizedBox(
+            height: 50,
+          ),
           usernameField(context),
           Spacer(),
           submitButton(context),
@@ -63,12 +69,12 @@ class _SignUpProfileState extends State<SignUpProfile> {
           pickImage();
         },
         child: CircleAvatar(
-          radius: 85,
+          radius: 90,
           backgroundColor: Colors.blueGrey,
           child: CircleAvatar(
               backgroundImage: imageProvider,
               backgroundColor: Colors.transparent,
-              radius: 80.0),
+              radius: 90.0),
         ),
       ),
     );
@@ -89,7 +95,8 @@ class _SignUpProfileState extends State<SignUpProfile> {
   }
 
   Future<void> pickImage() async {
-    final selected = await picker.getImage(source: ImageSource.gallery);
+    final selected =
+        await picker.getImage(source: ImageSource.gallery, imageQuality: 50);
     if (selected != null) {
       setState(() {
         _image = File(selected.path);
@@ -106,6 +113,7 @@ class _SignUpProfileState extends State<SignUpProfile> {
           border: Border.all(color: Colors.purple[600])),
       child: MaterialButton(
         onPressed: () {
+          FocusScope.of(context).unfocus();
           submitDialog(context);
         },
         child: Text('SUBMIT'),
@@ -144,5 +152,22 @@ class _SignUpProfileState extends State<SignUpProfile> {
         });
   }
 
-  void submitProfileDetails() {}
+  void submitProfileDetails() async {
+    if (usernameController.text == '') {
+      Fluttertoast.showToast(
+          msg: 'Please enter a username.', toastLength: Toast.LENGTH_LONG);
+      return;
+    }
+    String profilePicPath = '';
+    if (_image != null) {
+      profilePicPath = await saveProfilePic(_image);
+      print(profilePicPath);
+    }
+    bool result = await addUsernameAndProfileOnSignUp(
+        usernameController.text, profilePicPath);
+    if (result) {
+      print('saved');
+      //change page
+    }
+  }
 }
