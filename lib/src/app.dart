@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:talk/src/screens/signup_profile.dart';
 
 import 'screens/login.dart';
 import 'screens/sign_up.dart';
+import 'screens/loading.dart';
+import 'screens/signup_profile.dart';
+import 'screens/conversations.dart';
 
 class App extends StatelessWidget {
   @override
@@ -13,7 +15,7 @@ class App extends StatelessWidget {
         fontFamily: 'Fira',
       ),
       title: 'talk',
-      home: SignUpPage(),
+      // home: LoadingPage(),
       onGenerateRoute: routes,
     );
   }
@@ -22,6 +24,9 @@ class App extends StatelessWidget {
     String routeName = settings.name;
     if (routeName == '/') {
       //loading page
+      return MaterialPageRoute(builder: (context) {
+        return LoadingPage();
+      });
     } else if (routeName == '/signup') {
       //signup page
       return MaterialPageRoute(builder: (context) {
@@ -33,12 +38,15 @@ class App extends StatelessWidget {
         return LoginPage();
       });
     } else if (routeName == '/signup/profile') {
-      //login page
+      //sign up profile page
       return MaterialPageRoute(builder: (context) {
         return SignUpProfile();
       });
     } else if (routeName == '/conversations') {
       //conversation home page
+      return MaterialPageRoute(builder: (context) {
+        return ConversationsPage();
+      });
     }
   }
 }
