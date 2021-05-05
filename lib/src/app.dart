@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'blocs/provider.dart';
+
 import 'screens/login.dart';
 import 'screens/sign_up.dart';
 import 'screens/loading.dart';
@@ -9,14 +11,16 @@ import 'screens/conversations.dart';
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'Fira',
+    return Provider(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: 'Fira',
+        ),
+        title: 'talk',
+        // home: LoadingPage(),
+        onGenerateRoute: routes,
       ),
-      title: 'talk',
-      // home: LoadingPage(),
-      onGenerateRoute: routes,
     );
   }
 
