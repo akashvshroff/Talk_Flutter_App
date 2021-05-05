@@ -137,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
     bool result = await logIn(email, password);
     if (result) {
       //change page
-      print('logged in');
+      Navigator.pushReplacementNamed(context, '/conversations');
     }
   }
 
