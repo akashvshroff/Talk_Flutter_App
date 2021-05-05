@@ -17,10 +17,7 @@ Future<bool> signUp(String email, String password) async {
       message = e.toString();
     }
 
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_LONG,
-    );
+    toast(message);
 
     return false;
   }
@@ -41,10 +38,7 @@ Future<bool> logIn(String email, String password) async {
       message = e.toString();
     }
 
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_LONG,
-    );
+    toast(message);
 
     return false;
   }
@@ -55,7 +49,21 @@ Future<bool> resetPassword(String email) async {
     await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
     return true;
   } on FirebaseAuthException catch (e) {
-    Fluttertoast.showToast(msg: e.toString());
+    toast(e.toString());
     return false;
   }
+}
+
+Future<bool> signOut() async {
+  try {
+    await FirebaseAuth.instance.signOut();
+    return true;
+  } on FirebaseAuthException catch (e) {
+    toast(e.toString());
+    return false;
+  }
+}
+
+void toast(message) {
+  Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_LONG);
 }
