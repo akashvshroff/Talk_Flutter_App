@@ -166,8 +166,7 @@ class _SignUpProfileState extends State<SignUpProfile> {
     bool result = await addUsernameAndProfileOnSignUp(
         usernameController.text, profilePicPath);
     if (result) {
-      print('saved');
-      //change page
+      Navigator.pushReplacementNamed(context, '/conversations');
     }
   }
 }
