@@ -1,6 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:talk/src/models/message_model.dart';
+import '../models/conversation_model.dart';
+import '../models/active_conversation_model.dart';
+import 'dart:async';
 
 Future<bool> addUsernameAndProfileOnSignUp(
     String username, String profilePicPath) async {
