@@ -89,6 +89,10 @@ class ConversationsList extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 20.0,
                       )),
+                  subtitle: Text(
+                    ' ${activeConversation.lastMessage}',
+                    overflow: TextOverflow.ellipsis,
+                  ),
                   leading: CircleAvatar(
                     child: CircleAvatar(
                       backgroundImage:
