@@ -43,6 +43,8 @@ class Bloc {
       activeConversations.forEach((element) {
         activeConversationModels.add(ActiveConversationModel.fromMap(element));
       });
+      activeConversationModels
+          .sort((a, b) => b.lastUpdated.compareTo(a.lastUpdated));
       sink.add(activeConversationModels);
     });
   }
