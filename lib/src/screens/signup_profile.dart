@@ -106,7 +106,7 @@ class _SignUpProfileState extends State<SignUpProfile> {
 
   Container submitButton(context) {
     return Container(
-      width: MediaQuery.of(context).size.width / 3,
+      width: MediaQuery.of(context).size.width / 1.3,
       height: 45,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
