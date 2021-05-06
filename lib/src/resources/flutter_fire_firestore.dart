@@ -6,6 +6,24 @@ import '../models/conversation_model.dart';
 import '../models/active_conversation_model.dart';
 import 'dart:async';
 
+Future<bool> isUsernameUnique(String username) async {
+  try {
+    QuerySnapshot query = await FirebaseFirestore.instance
+        .collection('Users')
+        .where('username', isEqualTo: username)
+        .get();
+    if (query.docs.isEmpty) {
+      return true;
+    } else {
+      toast('Username already taken. Please select another.');
+      return false;
+    }
+  } catch (e) {
+    toast(e.toString());
+    return false;
+  }
+}
+
 Future<bool> addUsernameAndProfileOnSignUp(
     String username, String profilePicPath) async {
   //save username and profile pic path to current user id
@@ -29,7 +47,32 @@ Future<bool> addUsernameAndProfileOnSignUp(
     });
     return true;
   } catch (e) {
-    Fluttertoast.showToast(msg: e.toString());
+    toast(e.toString());
+    return false;
+  }
+}
+
+Future<bool> markConversationAsRead(
+    ActiveConversationModel activeConversation) async {
+  try {
+    String uid = FirebaseAuth.instance.currentUser.uid;
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection('Users').doc(uid);
+    FirebaseFirestore.instance.runTransaction((transaction) async {
+      DocumentSnapshot snapshot = await transaction.get(documentReference);
+      List data = snapshot.data()['active_conversations'];
+      for (int i = 0; i < data.length; i++) {
+        var map = data[i];
+        if (map['username'] == activeConversation.username) {
+          data[i]['new_message'] = false;
+          break;
+        }
+      }
+      transaction.update(documentReference, {'active_conversations': data});
+    });
+    return true;
+  } catch (e) {
+    toast(e.toString());
     return false;
   }
 }
