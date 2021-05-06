@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:talk/src/blocs/provider.dart';
 import '../widgets/conversations_list.dart';
 import '../widgets/connections_list.dart';
 import '../widgets/profile.dart';
@@ -13,34 +14,36 @@ class _ConversationsPageState extends State<ConversationsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(child: buildBody()),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        selectedItemColor: Colors.red,
-        unselectedItemColor: Colors.grey.shade600,
-        selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
-        unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
-        onTap: (int index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message),
-            label: "Chats",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group_work),
-            label: "Connections",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_box),
-            label: "Profile",
-          ),
-        ],
+    return Provider(
+      child: Scaffold(
+        body: SafeArea(child: buildBody()),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: currentIndex,
+          selectedItemColor: Colors.red,
+          unselectedItemColor: Colors.grey.shade600,
+          selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
+          unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
+          onTap: (int index) {
+            setState(() {
+              currentIndex = index;
+            });
+          },
+          type: BottomNavigationBarType.fixed,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.message),
+              label: "Chats",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.group_work),
+              label: "Connections",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_box),
+              label: "Profile",
+            ),
+          ],
+        ),
       ),
     );
   }
