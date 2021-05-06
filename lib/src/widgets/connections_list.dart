@@ -76,7 +76,7 @@ class ConnectionsList extends StatelessWidget {
           return Center(
               child: Text(
             'Add connections using the button above.',
-            style: TextStyle(fontSize: 22.0),
+            style: TextStyle(fontSize: 16.0),
           ));
         }
         return ListView.separated(

@@ -75,7 +75,7 @@ class ConversationsList extends StatelessWidget {
             return Center(
                 child: Text(
               'Start a conversation using the button above.',
-              style: TextStyle(fontSize: 22.0),
+              style: TextStyle(fontSize: 16.0),
             ));
           }
           return ListView.separated(
