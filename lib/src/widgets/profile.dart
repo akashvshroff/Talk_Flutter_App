@@ -6,6 +6,8 @@ import '../models/user_profile_model.dart';
 import '../blocs/provider.dart';
 import '../resources/flutter_fire_auth.dart';
 
+import 'tab_title.dart';
+
 class Profile extends StatefulWidget {
   @override
   _ProfileState createState() => _ProfileState();
@@ -28,17 +30,7 @@ class _ProfileState extends State<Profile> {
       margin: EdgeInsets.all(20.0),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Profile',
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    letterSpacing: 2.0,
-                  )),
-              signOutButton(),
-            ],
-          ),
+          TabTitle('Profile', 'Sign Out', Icons.logout, signOutUser),
           SizedBox(
             height: 6.0,
           ),
@@ -51,36 +43,6 @@ class _ProfileState extends State<Profile> {
           submitButton(context),
           Spacer(),
         ],
-      ),
-    );
-  }
-
-  Widget signOutButton() {
-    return GestureDetector(
-      onTap: signOutUser,
-      child: Container(
-        padding: EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 2),
-        height: 30,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          color: Colors.pink[50],
-        ),
-        child: Row(
-          children: <Widget>[
-            Icon(
-              Icons.logout,
-              color: Colors.purple[600],
-              size: 20,
-            ),
-            SizedBox(
-              width: 2,
-            ),
-            Text(
-              "Sign Out",
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
       ),
     );
   }
