@@ -72,6 +72,13 @@ class ConnectionsList extends StatelessWidget {
           );
         }
         List<ConnectionModel> connections = snapshot.data;
+        if (connections.isEmpty) {
+          return Center(
+              child: Text(
+            'Add connections using the button above.',
+            style: TextStyle(fontSize: 22.0),
+          ));
+        }
         return ListView.separated(
           separatorBuilder: (context, index) => Divider(
             height: 2.0,

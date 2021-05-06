@@ -71,6 +71,13 @@ class ConversationsList extends StatelessWidget {
         if (snapshot.hasData == false) {
           return Center(child: CircularProgressIndicator());
         } else {
+          if (snapshot.data.isEmpty) {
+            return Center(
+                child: Text(
+              'Start a conversation using the button above.',
+              style: TextStyle(fontSize: 22.0),
+            ));
+          }
           return ListView.separated(
             separatorBuilder: (context, index) {
               return Divider(
