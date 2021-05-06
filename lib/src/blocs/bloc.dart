@@ -31,6 +31,8 @@ class Bloc {
       _activeConversation.transform(activeConversationsTransformer());
   Stream<List<ConnectionModel>> get connectionsStream =>
       _connections.transform(connectionsTransformer());
+  Stream<UserProfileModel> get profileStream =>
+      _profile.transform(profileTransformer());
 
   activeConversationsTransformer() {
     return StreamTransformer<DocumentSnapshot,
