@@ -163,6 +163,10 @@ class _SignUpProfileState extends State<SignUpProfile> {
       profilePicPath = await saveProfilePic(_image);
       print(profilePicPath);
     }
+    bool unique = await isUsernameUnique(usernameController.text);
+    if (!unique) {
+      return;
+    }
     bool result = await addUsernameAndProfileOnSignUp(
         usernameController.text, profilePicPath);
     if (result) {
