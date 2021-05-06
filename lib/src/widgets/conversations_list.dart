@@ -36,9 +36,7 @@ class ConversationsList extends StatelessWidget {
 
   addNewButton() {
     return GestureDetector(
-      onTap: () {
-        //add new chat
-      },
+      onTap: addNewConverstion,
       child: Container(
         padding: EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 2),
         height: 30,
@@ -120,4 +118,6 @@ class ConversationsList extends StatelessWidget {
     bool result = await markConversationAsRead(activeConversation);
     print(result);
   }
+
+  void addNewConverstion() {}
 }
