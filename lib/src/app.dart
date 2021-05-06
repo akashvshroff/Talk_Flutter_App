@@ -11,16 +11,14 @@ import 'screens/conversations.dart';
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Provider(
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          fontFamily: 'Fira',
-        ),
-        title: 'talk',
-        // home: LoadingPage(),
-        onGenerateRoute: routes,
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        fontFamily: 'Fira',
       ),
+      title: 'talk',
+      home: LoadingPage(),
+      onGenerateRoute: routes,
     );
   }
 
