@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'blocs/provider.dart';
-
 import 'screens/login.dart';
 import 'screens/sign_up.dart';
 import 'screens/loading.dart';
