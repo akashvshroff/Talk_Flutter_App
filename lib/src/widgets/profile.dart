@@ -40,8 +40,6 @@ class _ProfileState extends State<Profile> {
           ),
           profile(bloc),
           Spacer(),
-          submitButton(context),
-          Spacer(),
         ],
       ),
     );
@@ -83,40 +81,15 @@ class _ProfileState extends State<Profile> {
     } else {
       profilePicPath = imageUrl;
     }
-    return Stack(
-      children: [
-        GestureDetector(
-          onTap: () {
-            pickImage();
-          },
-          child: CircleAvatar(
-            radius: 100,
-            backgroundColor: Colors.blueGrey,
-            child: CircleAvatar(
-                backgroundImage: _image == null
-                    ? NetworkImage(profilePicPath)
-                    : Image.file(_image).image,
-                backgroundColor: Colors.transparent,
-                radius: 100.0),
-          ),
-        ),
-        Positioned(
-            bottom: -7.0,
-            right: -5.0,
-            child: IconButton(
-              icon: Icon(
-                Icons.highlight_off,
-                color: Colors.red,
-                size: 36.0,
-              ),
-              onPressed: () {
-                setState(() {
-                  crossed = true;
-                  _image = null;
-                });
-              },
-            ))
-      ],
+    return CircleAvatar(
+      radius: 100,
+      backgroundColor: Colors.blueGrey,
+      child: CircleAvatar(
+          backgroundImage: _image == null
+              ? NetworkImage(profilePicPath)
+              : Image.file(_image).image,
+          backgroundColor: Colors.transparent,
+          radius: 100.0),
     );
   }
 
@@ -125,38 +98,12 @@ class _ProfileState extends State<Profile> {
       username,
       textAlign: TextAlign.center,
       style: TextStyle(
-          fontSize: 24.0, fontWeight: FontWeight.bold, letterSpacing: 2.0),
+          fontSize: 30.0, fontWeight: FontWeight.bold, letterSpacing: 2.0),
     );
-  }
-
-  Widget submitButton(context) {
-    return Container(
-      width: MediaQuery.of(context).size.width / 1.3,
-      height: 45,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
-          border: Border.all(color: Colors.purple[600])),
-      child: MaterialButton(
-        onPressed: changePicture,
-        child: Text('SUBMIT'),
-      ),
-    );
-  }
-
-  Future<void> pickImage() async {
-    final selected =
-        await picker.getImage(source: ImageSource.gallery, imageQuality: 50);
-    if (selected != null) {
-      setState(() {
-        _image = File(selected.path);
-      });
-    }
   }
 
   void signOutUser() async {
     await signOut();
     Navigator.pushReplacementNamed(context, '/login');
   }
-
-  void changePicture() {}
 }

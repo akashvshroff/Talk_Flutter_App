@@ -128,7 +128,7 @@ class _SignUpProfileState extends State<SignUpProfile> {
         style: TextStyle(fontSize: 20.0),
       ),
       content: Text(
-        'While you can change your profile picture, your username is permanent and cannot be altered.',
+        'Both your username and profile picture are permanent and cannot be altered later.',
         style: TextStyle(fontSize: 18.0),
       ),
       actions: [
