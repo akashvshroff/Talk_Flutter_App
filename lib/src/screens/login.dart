@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
     FocusScope.of(context).unfocus();
     String email = emailController.text;
     String password = passwordController.text;
-    if (email == null || password == null) {
+    if (email == '' || password == '') {
       alertDialog(
           'Error', 'Please ensure that you enter an email and password.');
       return;
