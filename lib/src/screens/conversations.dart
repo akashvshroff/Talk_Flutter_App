@@ -11,6 +11,7 @@ class ConversationsPage extends StatefulWidget {
 
 class _ConversationsPageState extends State<ConversationsPage> {
   int currentIndex = 0;
+  GlobalKey navBarKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +19,7 @@ class _ConversationsPageState extends State<ConversationsPage> {
       child: Scaffold(
         body: SafeArea(child: buildBody()),
         bottomNavigationBar: BottomNavigationBar(
+          key: navBarKey,
           currentIndex: currentIndex,
           selectedItemColor: Colors.red,
           unselectedItemColor: Colors.grey.shade600,
@@ -53,7 +55,7 @@ class _ConversationsPageState extends State<ConversationsPage> {
     if (currentIndex == 0) {
       return ConversationsList();
     } else if (currentIndex == 1) {
-      return ConnectionsList();
+      return ConnectionsList(navBarKey);
     } else {
       return Profile();
     }

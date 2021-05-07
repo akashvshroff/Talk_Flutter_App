@@ -8,12 +8,18 @@ import '../widgets/tab_title.dart';
 import '../blocs/provider.dart';
 
 class ConnectionsList extends StatefulWidget {
+  GlobalKey navBarKey;
+  ConnectionsList(this.navBarKey);
+
   @override
-  _ConnectionsListState createState() => _ConnectionsListState();
+  _ConnectionsListState createState() => _ConnectionsListState(navBarKey);
 }
 
 class _ConnectionsListState extends State<ConnectionsList> {
   TextEditingController usernameController = TextEditingController();
+  GlobalKey navBarKey;
+
+  _ConnectionsListState(this.navBarKey);
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +88,8 @@ class _ConnectionsListState extends State<ConnectionsList> {
   void startConversation(ConnectionModel connectionModel) async {
     bool result = await addNewConversationWithConnection(connectionModel);
     if (result) {
-      print('conversation added');
-      //change page
+      BottomNavigationBar navbar = navBarKey.currentWidget;
+      navbar.onTap(0);
     }
   }
 
