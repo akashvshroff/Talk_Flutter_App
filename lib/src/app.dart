@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 
 import 'screens/login.dart';
 import 'screens/sign_up.dart';
@@ -9,14 +10,16 @@ import 'screens/conversations.dart';
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'Fira',
+    return OKToast(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: 'Fira',
+        ),
+        title: 'talk',
+        home: LoadingPage(),
+        onGenerateRoute: routes,
       ),
-      title: 'talk',
-      home: LoadingPage(),
-      onGenerateRoute: routes,
     );
   }
 
