@@ -86,7 +86,7 @@ class ConversationsList extends StatelessWidget {
 
   void openConversation(ActiveConversationModel activeConversation) async {
     bool result = await markConversationAsRead(activeConversation);
-    print(result);
+    //open conversation and change screen
   }
 
   void addNewConverstion() {}
