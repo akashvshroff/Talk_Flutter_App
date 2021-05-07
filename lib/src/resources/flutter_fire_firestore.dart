@@ -228,6 +228,11 @@ Future<bool> addNewConversationWithConnection(
         'active_conversations_array': activeConversationsArray2
       });
 
+      conversationMap['username_1'] = username1;
+      conversationMap['username_2'] = username2;
+      conversationMap['profile_pic_path_1'] = profilePicPath1;
+      conversationMap['profile_pic_path_2'] = profilePicPath2;
+
       //create conversation doc
       transaction.set(conversationDocRef, conversationMap);
     });
