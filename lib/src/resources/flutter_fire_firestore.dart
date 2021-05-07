@@ -1,10 +1,16 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:talk/src/models/message_model.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:flutter/material.dart';
+
+import '../models/message_model.dart';
 import '../models/conversation_model.dart';
 import '../models/active_conversation_model.dart';
-import 'dart:async';
+
+import '../widgets/show_oktoast.dart';
 
 Future<bool> isUsernameUnique(String username) async {
   try {
@@ -18,6 +24,43 @@ Future<bool> isUsernameUnique(String username) async {
       toast('Username already taken. Please select another.');
       return false;
     }
+  } catch (e) {
+    toast(e.toString());
+    return false;
+  }
+}
+
+Future<bool> addConnectionWithUsername(String username) async {
+  try {
+    QuerySnapshot query = await FirebaseFirestore.instance
+        .collection('Users')
+        .where('username', isEqualTo: username)
+        .get();
+    if (query.docs.isEmpty) {
+      toast('No account exists with that username.');
+      return false;
+    }
+    DocumentSnapshot connectionSnapshot = query.docs[0];
+    String uid = FirebaseAuth.instance.currentUser.uid;
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection('Users').doc(uid);
+    FirebaseFirestore.instance.runTransaction((transaction) async {
+      DocumentSnapshot snapshot = await transaction.get(documentReference);
+      var data = snapshot.data()['connections'];
+      if (username == snapshot.data()['username']) {
+        toast('You cannot add yourself as a connection.');
+        return false;
+      }
+      Map<String, String> connectionMap = {
+        'user_id': connectionSnapshot.id,
+        'profile_pic_path': connectionSnapshot.data()['profile_pic_path'],
+        'username': connectionSnapshot.data()['username']
+      };
+      data.add(connectionMap);
+      transaction.update(documentReference, {'connections': data});
+    });
+    toast('User added to connection.');
+    return true;
   } catch (e) {
     toast(e.toString());
     return false;
@@ -75,8 +118,4 @@ Future<bool> markConversationAsRead(
     toast(e.toString());
     return false;
   }
-}
-
-void toast(message) {
-  Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_LONG);
 }

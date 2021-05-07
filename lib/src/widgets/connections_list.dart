@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:talk/src/models/connection_model.dart';
-import 'package:talk/src/widgets/tab_title.dart';
+
+import '../resources/flutter_fire_firestore.dart';
+import '../models/connection_model.dart';
+
+import '../widgets/tab_title.dart';
 
 import '../blocs/provider.dart';
 
-class ConnectionsList extends StatelessWidget {
+class ConnectionsList extends StatefulWidget {
+  @override
+  _ConnectionsListState createState() => _ConnectionsListState();
+}
+
+class _ConnectionsListState extends State<ConnectionsList> {
+  TextEditingController usernameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final Bloc bloc = Provider.of(context);
@@ -12,7 +22,7 @@ class ConnectionsList extends StatelessWidget {
       margin: EdgeInsets.all(20.0),
       child: Column(
         children: [
-          TabTitle('Connections', 'Add New', Icons.add, addNewConnection),
+          TabTitle('Connections', 'Add New', Icons.add, addUsernameDialog),
           SizedBox(
             height: 6.0,
           ),
@@ -71,5 +81,44 @@ class ConnectionsList extends StatelessWidget {
 
   void startConversation(ConnectionModel connectionModel) {}
 
-  void addNewConnection() {}
+  void addNewConnection() async {
+    String username = usernameController.text;
+    await addConnectionWithUsername(username);
+  }
+
+  void addUsernameDialog() {
+    usernameController.text = '';
+    var dialog = AlertDialog(
+      title: Text(
+        'Add Connection',
+        style: TextStyle(fontSize: 20.0),
+      ),
+      content: TextField(
+        controller: usernameController,
+        decoration: InputDecoration(hintText: 'Enter username'),
+      ),
+      actions: [
+        TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              'Cancel',
+              style: TextStyle(fontSize: 16.0),
+            )),
+        TextButton(
+            onPressed: () {
+              addNewConnection();
+              Navigator.of(context).pop();
+            },
+            child: Text('Submit', style: TextStyle(fontSize: 16.0))),
+      ],
+    );
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return dialog;
+        });
+  }
 }
