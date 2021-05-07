@@ -9,6 +9,9 @@ import '../models/active_conversation_model.dart';
 import 'tab_title.dart';
 
 class ConversationsList extends StatelessWidget {
+  GlobalKey navBarKey;
+  ConversationsList(this.navBarKey);
+
   @override
   Widget build(BuildContext context) {
     final Bloc bloc = Provider.of(context);
@@ -89,5 +92,8 @@ class ConversationsList extends StatelessWidget {
     //open conversation and change screen
   }
 
-  void addNewConverstion() {}
+  void addNewConverstion() {
+    BottomNavigationBar navBar = navBarKey.currentWidget;
+    navBar.onTap(1);
+  }
 }

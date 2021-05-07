@@ -53,7 +53,7 @@ class _ConversationsPageState extends State<ConversationsPage> {
   Widget buildBody() {
     //conditional with the current index of the nav bar.
     if (currentIndex == 0) {
-      return ConversationsList();
+      return ConversationsList(navBarKey);
     } else if (currentIndex == 1) {
       return ConnectionsList(navBarKey);
     } else {
