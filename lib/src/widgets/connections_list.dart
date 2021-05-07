@@ -79,7 +79,13 @@ class _ConnectionsListState extends State<ConnectionsList> {
     );
   }
 
-  void startConversation(ConnectionModel connectionModel) {}
+  void startConversation(ConnectionModel connectionModel) async {
+    bool result = await addNewConversationWithConnection(connectionModel);
+    if (result) {
+      print('conversation added');
+      //change page
+    }
+  }
 
   void addNewConnection() async {
     String username = usernameController.text;
