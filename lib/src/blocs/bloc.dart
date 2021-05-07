@@ -1,5 +1,3 @@
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../models/active_conversation_model.dart';
 import '../models/connection_model.dart';
 import '../models/user_profile_model.dart';
+import '../models/message_model.dart';
+import '../models/conversation_model.dart';
 
 class Bloc {
   //StreamControllers
@@ -33,6 +33,29 @@ class Bloc {
       _connections.transform(connectionsTransformer());
   Stream<UserProfileModel> get profileStream =>
       _profile.transform(profileTransformer());
+
+  Stream<ConversationModel> getConversationStream(String conversationId) {
+    return FirebaseFirestore.instance
+        .collection('Conversations')
+        .doc(conversationId)
+        .snapshots()
+        .transform(conversationTransformer());
+  }
+
+  conversationTransformer() {
+    return StreamTransformer<DocumentSnapshot, ConversationModel>.fromHandlers(
+        handleData: (DocumentSnapshot snapshot, sink) {
+      var data = snapshot.data();
+      var messages = data['messages'];
+      List<MessageModel> messageModels = [];
+      messages.forEach((element) {
+        messageModels.add(MessageModel.fromMap(element));
+      });
+      data['messages'] = messageModels;
+      data['conversation_id'] = snapshot.id;
+      sink.add(ConversationModel.fromMap(data));
+    });
+  }
 
   activeConversationsTransformer() {
     return StreamTransformer<DocumentSnapshot,
