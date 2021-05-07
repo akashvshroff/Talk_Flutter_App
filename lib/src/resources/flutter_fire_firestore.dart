@@ -38,13 +38,16 @@ Future<bool> addConnectionWithUsername(String username) async {
       toast('No account exists with that username.');
       return false;
     }
+    String uid = FirebaseAuth.instance.currentUser.uid;
+
     DocumentSnapshot connectionSnapshot = query.docs[0];
     String connectionUid = connectionSnapshot.id;
-    String uid = FirebaseAuth.instance.currentUser.uid;
+
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection('Users').doc(uid);
     DocumentReference connectionReference =
         FirebaseFirestore.instance.collection('Users').doc(connectionUid);
+
     FirebaseFirestore.instance.runTransaction((transaction) async {
       DocumentSnapshot snapshot = await transaction.get(documentReference);
       var doc = snapshot.data();
@@ -58,6 +61,8 @@ Future<bool> addConnectionWithUsername(String username) async {
         'profile_pic_path': connectionSnapshot.data()['profile_pic_path'],
         'username': connectionSnapshot.data()['username']
       };
+
+      //add connection to user's connections
       data.add(connectionMap);
       transaction.update(documentReference, {'connections': data});
 
@@ -68,6 +73,7 @@ Future<bool> addConnectionWithUsername(String username) async {
         'username': doc['username'],
         'profile_pic_path': doc['profile_pic_path'],
       });
+
       transaction
           .update(connectionReference, {'connections': user2Connections});
     });
@@ -138,6 +144,7 @@ Future<bool> addNewConversationWithConnection(
   try {
     String uid = FirebaseAuth.instance.currentUser.uid;
     Map<String, dynamic> conversationMap = {};
+    //conversationId is alphabetic ordering of both user ids
     if ((uid.compareTo(connectionModel.userId)) == -1) {
       conversationMap['user_1'] = uid;
       conversationMap['user_2'] = connectionModel.userId;
@@ -146,19 +153,24 @@ Future<bool> addNewConversationWithConnection(
       conversationMap['user_2'] = uid;
     }
     conversationMap['messages'] = [];
+
     String conversationId =
         conversationMap['user_1'] + conversationMap['user_2'];
+
     DocumentReference user1DocRef = FirebaseFirestore.instance
         .collection('Users')
         .doc(conversationMap['user_1']);
+
     DocumentReference user2DocRef = FirebaseFirestore.instance
         .collection('Users')
         .doc(conversationMap['user_2']);
+
     DocumentReference conversationDocRef = FirebaseFirestore.instance
         .collection('Conversations')
         .doc(conversationId);
 
     FirebaseFirestore.instance.runTransaction((transaction) async {
+      //data for user1
       DocumentSnapshot user1Doc = await transaction.get(user1DocRef);
       List activeConversations1 = user1Doc.data()['active_conversations'];
       List activeConversationsArray1 =
@@ -171,6 +183,7 @@ Future<bool> addNewConversationWithConnection(
         return false;
       }
 
+      //data for user2
       DocumentSnapshot user2Doc = await transaction.get(user2DocRef);
       List activeConversations2 = user2Doc.data()['active_conversations'];
       List activeConversationsArray2 =
@@ -178,9 +191,11 @@ Future<bool> addNewConversationWithConnection(
       String username2 = user2Doc.data()['username'];
       String profilePicPath2 = user2Doc.data()['profile_pic_path'];
 
+      //add common conversationId for both users
       activeConversationsArray1.add(conversationId);
       activeConversationsArray2.add(conversationId);
 
+      //active conversation info to add to user1 doc
       Map activeConversationMap1 = {
         'username': username2,
         'profile_pic_path': profilePicPath2,
@@ -190,6 +205,7 @@ Future<bool> addNewConversationWithConnection(
         'last_message': 'Click to start chatting.'
       };
 
+      //active conversation info to add to user2 doc
       Map activeConversationMap2 = {
         'username': username1,
         'profile_pic_path': profilePicPath1,
@@ -212,6 +228,7 @@ Future<bool> addNewConversationWithConnection(
         'active_conversations_array': activeConversationsArray2
       });
 
+      //create conversation doc
       transaction.set(conversationDocRef, conversationMap);
     });
     toast('Conversation added.');
