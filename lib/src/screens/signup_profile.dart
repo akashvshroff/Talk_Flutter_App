@@ -136,13 +136,13 @@ class _SignUpProfileState extends State<SignUpProfile> {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('Cancel')),
+            child: Text('Cancel', style: TextStyle(fontSize: 16.0))),
         TextButton(
             onPressed: () {
               submitProfileDetails();
               Navigator.of(context).pop();
             },
-            child: Text('Submit')),
+            child: Text('Submit', style: TextStyle(fontSize: 16.0))),
       ],
     );
     showDialog(
