@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
-import 'package:image_picker/image_picker.dart';
 import '../models/user_profile_model.dart';
 
 import '../blocs/provider.dart';
@@ -14,13 +12,10 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  File _image;
-  ImagePicker picker = ImagePicker();
   String defaultUrl =
       'https://firebasestorage.googleapis.com/v0/b/talk-chat-app-66f32.appspot.com/o/default_profile.png?alt=media&token=b3d50e26-7355-4a8f-8340-750cee75ed81';
   String username = 'loading...';
   String profilePicPath = '';
-  bool crossed = false;
   String imageUrl = '';
 
   @override
@@ -76,7 +71,7 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget profileImage() {
-    if (crossed || imageUrl == '') {
+    if (imageUrl == '') {
       profilePicPath = defaultUrl;
     } else {
       profilePicPath = imageUrl;
@@ -85,9 +80,7 @@ class _ProfileState extends State<Profile> {
       radius: 100,
       backgroundColor: Colors.blueGrey,
       child: CircleAvatar(
-          backgroundImage: _image == null
-              ? NetworkImage(profilePicPath)
-              : Image.file(_image).image,
+          backgroundImage: NetworkImage(profilePicPath),
           backgroundColor: Colors.transparent,
           radius: 100.0),
     );
