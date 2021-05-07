@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
+
+import '../widgets/show_oktoast.dart';
 
 Future<bool> signUp(String email, String password) async {
   try {
@@ -62,8 +65,4 @@ Future<bool> signOut() async {
     toast(e.toString());
     return false;
   }
-}
-
-void toast(message) {
-  Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_LONG);
 }
