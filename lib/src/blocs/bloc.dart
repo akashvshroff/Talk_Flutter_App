@@ -51,6 +51,7 @@ class Bloc {
       messages.forEach((element) {
         messageModels.add(MessageModel.fromMap(element));
       });
+      messageModels.sort((a, b) => b.sentTime.compareTo(a.sentTime));
       data['messages'] = messageModels;
       data['conversation_id'] = snapshot.id;
       sink.add(ConversationModel.fromMap(data));
