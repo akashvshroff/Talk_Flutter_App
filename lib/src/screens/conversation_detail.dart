@@ -24,6 +24,7 @@ class _ConversationDetailState extends State<ConversationDetail> {
       'https://firebasestorage.googleapis.com/v0/b/talk-chat-app-66f32.appspot.com/o/default_profile.png?alt=media&token=b3d50e26-7355-4a8f-8340-750cee75ed81';
   String conversationId;
   TextEditingController messageController = TextEditingController();
+  ScrollController scrollController = ScrollController();
 
   _ConversationDetailState(this.conversationId);
 
@@ -93,6 +94,8 @@ class _ConversationDetailState extends State<ConversationDetail> {
             setState(() {
               username = conversation.username2;
               profilePicPath = conversation.profilePicPath2;
+              scrollController.animateTo(0.0,
+                  curve: Curves.easeOut, duration: Duration(milliseconds: 300));
             });
           } else {
             setState(() {
@@ -103,6 +106,9 @@ class _ConversationDetailState extends State<ConversationDetail> {
         });
         List<MessageModel> messages = conversation.messages;
         return ListView.builder(
+            controller: scrollController,
+            shrinkWrap: true,
+            padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
             itemCount: messages.length,
             itemBuilder: (context, index) {
               return Message(messages[index]);
