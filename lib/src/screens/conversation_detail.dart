@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:talk/src/resources/flutter_fire_firestore.dart';
 
 import '../blocs/provider.dart';
 
@@ -94,8 +95,6 @@ class _ConversationDetailState extends State<ConversationDetail> {
             setState(() {
               username = conversation.username2;
               profilePicPath = conversation.profilePicPath2;
-              scrollController.animateTo(0.0,
-                  curve: Curves.easeOut, duration: Duration(milliseconds: 300));
             });
           } else {
             setState(() {
@@ -104,14 +103,23 @@ class _ConversationDetailState extends State<ConversationDetail> {
             });
           }
         });
+
         List<MessageModel> messages = conversation.messages;
         return ListView.builder(
+            reverse: true,
             controller: scrollController,
             shrinkWrap: true,
             padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
             itemCount: messages.length,
             itemBuilder: (context, index) {
-              return Message(messages[index]);
+              if (messages[index] != null) {
+                return Message(messages[index]);
+              } else {
+                return Container(
+                  height: 50.0,
+                  width: 0.0,
+                );
+              }
             });
       },
     );
@@ -121,7 +129,7 @@ class _ConversationDetailState extends State<ConversationDetail> {
     return Align(
       alignment: Alignment.bottomLeft,
       child: Container(
-        padding: EdgeInsets.only(left: 30, bottom: 10, top: 20),
+        padding: EdgeInsets.only(left: 20, bottom: 20, top: 10),
         height: 60,
         width: double.infinity,
         color: Colors.white,
@@ -129,8 +137,10 @@ class _ConversationDetailState extends State<ConversationDetail> {
           children: <Widget>[
             Expanded(
               child: TextField(
+                maxLines: 1,
                 controller: messageController,
                 decoration: InputDecoration(
+                  contentPadding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 10.0),
                   hintText: 'Write message...',
                   border: InputBorder.none,
                 ),
@@ -144,7 +154,7 @@ class _ConversationDetailState extends State<ConversationDetail> {
               child: Icon(
                 Icons.send,
                 color: Colors.white,
-                size: 18,
+                size: 20,
               ),
               backgroundColor: Colors.blue[200],
             )
@@ -154,5 +164,12 @@ class _ConversationDetailState extends State<ConversationDetail> {
     );
   }
 
-  void sendMessage() {}
+  void sendMessage() async {
+    String newMessage = messageController.text;
+    await sendMessageWithConversationId(newMessage, conversationId);
+    messageController.text = '';
+    setState(() {
+      scrollController.jumpTo(0.0);
+    });
+  }
 }
