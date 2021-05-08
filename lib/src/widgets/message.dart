@@ -1,10 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 import '../models/message_model.dart';
 
 class Message extends StatelessWidget {
   MessageModel message;
   bool sender;
+  String sentTime;
+  String sentDate;
 
   Message(this.message) {
     if (message.senderId == FirebaseAuth.instance.currentUser.uid) {
@@ -12,6 +16,10 @@ class Message extends StatelessWidget {
     } else {
       sender = false;
     }
+    var dateFormat = DateFormat.yMMMd();
+    var timeFormat = DateFormat.jm();
+    sentDate = dateFormat.format(DateTime.parse(message.sentTime));
+    sentTime = timeFormat.format(DateTime.parse(message.sentTime));
   }
 
   @override
@@ -23,12 +31,23 @@ class Message extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: sender ? Colors.blue[100] : Colors.grey[200],
+              color: sender ? Colors.blue[50] : Colors.grey[100],
             ),
             padding: EdgeInsets.all(12),
-            child: Text(message.text,
-                textAlign: sender ? TextAlign.right : TextAlign.left,
-                style: TextStyle(fontSize: 16, color: Colors.black)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(message.text,
+                    textAlign: sender ? TextAlign.right : TextAlign.left,
+                    style: TextStyle(fontSize: 16, color: Colors.black)),
+                SizedBox(height: 6.0),
+                Text(
+                  '$sentTime : $sentDate',
+                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                  textAlign: sender ? TextAlign.right : TextAlign.left,
+                )
+              ],
+            ),
           ),
         ));
   }
