@@ -77,7 +77,7 @@ class ConversationsList extends StatelessWidget {
                           size: 30,
                         )
                       : Container(height: 0.0, width: 0.0),
-                  onTap: () => openConversation(activeConversation),
+                  onTap: () => openConversation(context, activeConversation),
                 ),
               );
             },
@@ -87,9 +87,11 @@ class ConversationsList extends StatelessWidget {
     );
   }
 
-  void openConversation(ActiveConversationModel activeConversation) async {
-    bool result = await markConversationAsRead(activeConversation);
-    //open conversation and change screen
+  void openConversation(
+      BuildContext context, ActiveConversationModel activeConversation) async {
+    await markConversationAsRead(activeConversation);
+    Navigator.pushNamed(
+        context, '/conversation_detail/${activeConversation.conversationId}');
   }
 
   void addNewConverstion() {
