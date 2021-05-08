@@ -123,13 +123,20 @@ Future<bool> markConversationAsRead(
     FirebaseFirestore.instance.runTransaction((transaction) async {
       DocumentSnapshot snapshot = await transaction.get(documentReference);
       List data = snapshot.data()['active_conversations'];
+      List<Map> updatedData = [];
       for (int i = 0; i < data.length; i++) {
+        updatedData.add(data[i]);
         var map = data[i];
-        if (map['username'] == activeConversation.username) {
-          data[i]['new_message'] = false;
+        if (map['conversation_id'] == activeConversation.conversationId) {
+          updatedData[i]['new_message'] = false;
           break;
         }
       }
+
+      if (updatedData == data) {
+        return true;
+      }
+
       transaction.update(documentReference, {'active_conversations': data});
     });
     return true;
