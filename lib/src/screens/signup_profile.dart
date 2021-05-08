@@ -3,7 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import '../resources/flutter_fire_storage.dart';
 import '../resources/flutter_fire_firestore.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import '../widgets/show_oktoast.dart';
 
 class SignUpProfile extends StatefulWidget {
   @override
@@ -154,8 +154,7 @@ class _SignUpProfileState extends State<SignUpProfile> {
 
   void submitProfileDetails() async {
     if (usernameController.text == '') {
-      Fluttertoast.showToast(
-          msg: 'Please enter a username.', toastLength: Toast.LENGTH_LONG);
+      toast('Please enter a username.');
       return;
     }
     String profilePicPath = '';
