@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../blocs/provider.dart';
 
 import '../resources/flutter_fire_firestore.dart';
+import '../resources/date_formatting.dart';
 
 import '../models/active_conversation_model.dart';
 
@@ -54,18 +54,9 @@ class ConversationsList extends StatelessWidget {
             itemCount: snapshot.data.length,
             itemBuilder: (context, index) {
               ActiveConversationModel activeConversation = snapshot.data[index];
-              var dateFormat = DateFormat.yMd();
-              var timeFormat = DateFormat.jm();
-              DateTime lastUpdated =
-                  DateTime.parse(activeConversation.lastUpdated);
-              String updateDate = dateFormat.format(lastUpdated);
-              String updateTime = dateFormat.format(lastUpdated);
-              String toShow;
-              if (calculateDifference(lastUpdated) == 0) {
-                toShow = updateTime;
-              } else {
-                toShow = updateDate;
-              }
+
+              String toShow =
+                  getActiveConversationDate(activeConversation.lastUpdated);
 
               return Container(
                 margin: EdgeInsets.only(top: 4.0, bottom: 4.0),
@@ -110,12 +101,5 @@ class ConversationsList extends StatelessWidget {
   void addNewConverstion() {
     BottomNavigationBar navBar = navBarKey.currentWidget;
     navBar.onTap(1);
-  }
-
-  int calculateDifference(DateTime date) {
-    DateTime now = DateTime.now();
-    return DateTime(date.year, date.month, date.day)
-        .difference(DateTime(now.year, now.month, now.day))
-        .inDays;
   }
 }

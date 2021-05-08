@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:talk/src/resources/date_formatting.dart';
 
 import '../models/message_model.dart';
 
 class Message extends StatelessWidget {
   MessageModel message;
   bool sender;
-  String sentTime;
-  String sentDate;
+  String sentInfo;
 
   Message(this.message) {
     if (message.senderId == FirebaseAuth.instance.currentUser.uid) {
@@ -16,10 +16,8 @@ class Message extends StatelessWidget {
     } else {
       sender = false;
     }
-    var dateFormat = DateFormat.yMMMd();
-    var timeFormat = DateFormat.jm();
-    sentDate = dateFormat.format(DateTime.parse(message.sentTime));
-    sentTime = timeFormat.format(DateTime.parse(message.sentTime));
+    sentInfo =
+        '${getFormattedTime(message.sentTime)} on ${getFormattedDate(message.sentTime)}';
   }
 
   @override
@@ -42,7 +40,7 @@ class Message extends StatelessWidget {
                     style: TextStyle(fontSize: 16, color: Colors.black)),
                 SizedBox(height: 6.0),
                 Text(
-                  '$sentTime : $sentDate',
+                  sentInfo,
                   style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                   textAlign: sender ? TextAlign.right : TextAlign.left,
                 )
