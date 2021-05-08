@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import '../models/message_model.dart';
 import '../models/conversation_model.dart';
@@ -245,6 +246,83 @@ Future<bool> addNewConversationWithConnection(
     });
     toast('Conversation added.');
     return true;
+  } catch (e) {
+    toast(e.toString());
+    return false;
+  }
+}
+
+Future<bool> sendMessageWithConversationId(
+    String newMessage, String conversationId) async {
+  try {
+    String sentMessage = DateTime.now().toIso8601String();
+    DocumentReference conversationDocRef = FirebaseFirestore.instance
+        .collection('Conversations')
+        .doc(conversationId);
+    String user1;
+    String user2;
+    FirebaseFirestore.instance.runTransaction((transaction) async {
+      DocumentSnapshot conversationSnapshot =
+          await transaction.get(conversationDocRef);
+      var messages = conversationSnapshot.data()['messages'];
+      user1 = conversationSnapshot.data()['user_1'];
+      user2 = conversationSnapshot.data()['user_2'];
+      messages.add({
+        'text': newMessage,
+        'sender_id': FirebaseAuth.instance.currentUser.uid,
+        'sent_time': sentMessage,
+      });
+      transaction.update(conversationDocRef, {'messages': messages});
+      updateActiveConversations(
+          user1, user2, newMessage, conversationId, sentMessage);
+    });
+    return true;
+  } catch (e) {
+    toast(e.toString());
+    return false;
+  }
+}
+
+Future<bool> updateActiveConversations(String user1, String user2,
+    String newMessage, String conversationId, String lastUpdated) async {
+  try {
+    String userId = FirebaseAuth.instance.currentUser.uid;
+    DocumentReference user1Ref =
+        FirebaseFirestore.instance.collection('Users').doc(user1);
+    DocumentReference user2Ref =
+        FirebaseFirestore.instance.collection('Users').doc(user2);
+
+    FirebaseFirestore.instance.runTransaction((transaction) async {
+      DocumentSnapshot user1Doc = await transaction.get(user1Ref);
+      var user1ActiveConversations = user1Doc.data()['active_conversations'];
+
+      DocumentSnapshot user2Doc = await transaction.get(user2Ref);
+      var user2ActiveConversations = user2Doc.data()['active_conversations'];
+
+      for (int i = 0; i < user1ActiveConversations.length; i++) {
+        if (user1ActiveConversations[i]['conversation_id'] == conversationId) {
+          user1ActiveConversations[i]['last_message'] = newMessage;
+          user1ActiveConversations[i]['new_message'] =
+              userId == user1 ? false : true;
+          break;
+        }
+      }
+
+      for (int i = 0; i < user2ActiveConversations.length; i++) {
+        if (user2ActiveConversations[i]['conversation_id'] == conversationId) {
+          user2ActiveConversations[i]['last_message'] = newMessage;
+          user2ActiveConversations[i]['new_message'] =
+              userId == user2 ? false : true;
+          break;
+        }
+      }
+
+      transaction
+          .update(user1Ref, {'active_conversations': user1ActiveConversations});
+      transaction
+          .update(user2Ref, {'active_conversations': user2ActiveConversations});
+      return true;
+    });
   } catch (e) {
     toast(e.toString());
     return false;
