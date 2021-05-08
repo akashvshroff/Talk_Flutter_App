@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../blocs/provider.dart';
 
@@ -53,6 +54,19 @@ class ConversationsList extends StatelessWidget {
             itemCount: snapshot.data.length,
             itemBuilder: (context, index) {
               ActiveConversationModel activeConversation = snapshot.data[index];
+              var dateFormat = DateFormat.yMd();
+              var timeFormat = DateFormat.jm();
+              DateTime lastUpdated =
+                  DateTime.parse(activeConversation.lastUpdated);
+              String updateDate = dateFormat.format(lastUpdated);
+              String updateTime = dateFormat.format(lastUpdated);
+              String toShow;
+              if (calculateDifference(lastUpdated) == 0) {
+                toShow = updateTime;
+              } else {
+                toShow = updateDate;
+              }
+
               return Container(
                 margin: EdgeInsets.only(top: 4.0, bottom: 4.0),
                 child: ListTile(
@@ -70,13 +84,12 @@ class ConversationsList extends StatelessWidget {
                           NetworkImage(activeConversation.profilePicPath),
                     ),
                   ),
-                  trailing: activeConversation.newMessage
-                      ? Icon(
-                          Icons.touch_app,
-                          color: Colors.green,
-                          size: 30,
-                        )
-                      : Container(height: 0.0, width: 0.0),
+                  trailing: Text(toShow,
+                      style: TextStyle(
+                        fontWeight: activeConversation.newMessage
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      )),
                   onTap: () => openConversation(context, activeConversation),
                 ),
               );
@@ -97,5 +110,12 @@ class ConversationsList extends StatelessWidget {
   void addNewConverstion() {
     BottomNavigationBar navBar = navBarKey.currentWidget;
     navBar.onTap(1);
+  }
+
+  int calculateDifference(DateTime date) {
+    DateTime now = DateTime.now();
+    return DateTime(date.year, date.month, date.day)
+        .difference(DateTime(now.year, now.month, now.day))
+        .inDays;
   }
 }
