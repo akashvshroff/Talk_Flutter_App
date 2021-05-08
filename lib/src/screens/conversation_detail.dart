@@ -146,7 +146,7 @@ class _ConversationDetailState extends State<ConversationDetail> {
                 color: Colors.white,
                 size: 18,
               ),
-              backgroundColor: Colors.purple[600],
+              backgroundColor: Colors.blue[200],
             )
           ],
         ),
