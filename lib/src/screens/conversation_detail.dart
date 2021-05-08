@@ -129,18 +129,19 @@ class _ConversationDetailState extends State<ConversationDetail> {
     return Align(
       alignment: Alignment.bottomLeft,
       child: Container(
-        padding: EdgeInsets.only(left: 20, bottom: 20, top: 10),
+        padding: EdgeInsets.only(left: 20, bottom: 10, top: 10),
         height: 60,
         width: double.infinity,
         color: Colors.white,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             Expanded(
               child: TextField(
                 maxLines: 1,
                 controller: messageController,
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 10.0),
+                  contentPadding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 4.0),
                   hintText: 'Write message...',
                   border: InputBorder.none,
                 ),
@@ -154,9 +155,9 @@ class _ConversationDetailState extends State<ConversationDetail> {
               child: Icon(
                 Icons.send,
                 color: Colors.white,
-                size: 20,
+                size: 24,
               ),
-              backgroundColor: Colors.blue[200],
+              backgroundColor: Colors.green[300],
             )
           ],
         ),
