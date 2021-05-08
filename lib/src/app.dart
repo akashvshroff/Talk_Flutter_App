@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 
+import 'blocs/provider.dart';
+
 import 'screens/login.dart';
 import 'screens/sign_up.dart';
 import 'screens/loading.dart';
 import 'screens/signup_profile.dart';
 import 'screens/conversations.dart';
+import 'screens/conversation_detail.dart';
 
 class App extends StatelessWidget {
   @override
@@ -49,6 +52,11 @@ class App extends StatelessWidget {
       //conversation home page
       return MaterialPageRoute(builder: (context) {
         return ConversationsPage();
+      });
+    } else if (routeName.contains('conversation_detail')) {
+      String conversationId = routeName.replaceAll('/conversation_detail/', '');
+      return MaterialPageRoute(builder: (context) {
+        return Provider(child: ConversationDetail(conversationId));
       });
     }
   }
