@@ -304,6 +304,7 @@ Future<bool> updateActiveConversations(String user1, String user2,
           user1ActiveConversations[i]['last_message'] = newMessage;
           user1ActiveConversations[i]['new_message'] =
               userId == user1 ? false : true;
+          user1ActiveConversations[i]['last_updated'] = lastUpdated;
           break;
         }
       }
@@ -313,6 +314,7 @@ Future<bool> updateActiveConversations(String user1, String user2,
           user2ActiveConversations[i]['last_message'] = newMessage;
           user2ActiveConversations[i]['new_message'] =
               userId == user2 ? false : true;
+          user2ActiveConversations[i]['last_updated'] = lastUpdated;
           break;
         }
       }
