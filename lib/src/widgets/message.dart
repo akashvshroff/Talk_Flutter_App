@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:talk/src/resources/date_formatting.dart';
 
 import '../models/message_model.dart';
