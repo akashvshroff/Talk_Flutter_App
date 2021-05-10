@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:talk/src/blocs/provider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import '../resources/local_notification_service.dart';
 import '../widgets/conversations_list.dart';
 import '../widgets/connections_list.dart';
 import '../widgets/profile.dart';
@@ -12,6 +14,16 @@ class ConversationsPage extends StatefulWidget {
 class _ConversationsPageState extends State<ConversationsPage> {
   int currentIndex = 0;
   GlobalKey navBarKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification notification = message.notification;
+      NotificationService().showNotification(
+          message.messageId, notification.title, notification.body, '');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
