@@ -1,4 +1,5 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class NotificationService {
   static final NotificationService _notificationService =
@@ -24,14 +25,24 @@ class NotificationService {
 
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: selectNotification);
+
+    const AndroidNotificationChannel channel = AndroidNotificationChannel(
+      'high_importance_channel', // id
+      'High Importance Notifications', // title
+      'This channel is used for important notifications.', // description
+      importance: Importance.max,
+    );
+
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
   }
 
   Future selectNotification(String payload) async {}
 
   void showNotification(String messageId, String title, String newMessage,
       String conversationId) async {
-    print('showing notification now');
-
     int id = messageId.hashCode;
 
     await flutterLocalNotificationsPlugin.show(
@@ -39,8 +50,12 @@ class NotificationService {
       title,
       newMessage,
       const NotificationDetails(
-          android: AndroidNotificationDetails(channelId, 'com.example.talk',
-              'To inform you of incoming messages.')),
+          android: AndroidNotificationDetails(
+        'high_importance_channel', // id
+        'High Importance Notifications', // title
+        'This channel is used for important notifications.', // description
+        importance: Importance.max,
+      )),
       payload: conversationId,
     );
   }
