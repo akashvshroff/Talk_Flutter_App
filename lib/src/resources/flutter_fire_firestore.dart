@@ -91,6 +91,7 @@ Future<bool> addUsernameAndProfileOnSignUp(
       'https://firebasestorage.googleapis.com/v0/b/talk-chat-app-66f32.appspot.com/o/default_profile.png?alt=media&token=b3d50e26-7355-4a8f-8340-750cee75ed81';
   try {
     String uid = FirebaseAuth.instance.currentUser.uid;
+    String fcmToken = await FirebaseMessaging.instance.getToken();
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection('Users').doc(uid);
     FirebaseFirestore.instance.runTransaction((transaction) async {
@@ -102,7 +103,8 @@ Future<bool> addUsernameAndProfileOnSignUp(
               profilePicPath != '' ? profilePicPath : defaultPath,
           'connections': [],
           'active_conversations': [],
-          'active_conversations_array': []
+          'active_conversations_array': [],
+          'fcm_token': fcmToken,
         });
       }
     });
