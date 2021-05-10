@@ -29,6 +29,8 @@ dependencies:
   cloud_firestore: "^0.16.0+1"
   firebase_auth: "^0.20.1"
   firebase_storage: "^7.0.0"
+  firebase_messaging: "^8.0.0-dev.15"
+
 
   #general
   oktoast: ^3.0.0
