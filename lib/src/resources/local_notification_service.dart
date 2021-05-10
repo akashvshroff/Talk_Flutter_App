@@ -12,9 +12,11 @@ class NotificationService {
 
   NotificationService._internal();
 
+  static const channelId = '123';
+
   Future<void> init() async {
     final AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('app_icon');
+        AndroidInitializationSettings('chat');
 
     final InitializationSettings initializationSettings =
         InitializationSettings(
@@ -26,29 +28,19 @@ class NotificationService {
 
   Future selectNotification(String payload) async {}
 
-  void showNotification(
-      String title, String newMessage, String conversationId) async {
-    const String channelId = '123';
-    const String channelName = 'talk_messages';
-    const String channelDescription = 'incoming messages from the chat app';
-    int id = DateTime.now().millisecondsSinceEpoch;
-    const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(
-      channelId,
-      channelName,
-      channelDescription,
-      importance: Importance.defaultImportance,
-      priority: Priority.high,
-    );
+  void showNotification(String messageId, String title, String newMessage,
+      String conversationId) async {
+    print('showing notification now');
 
-    const NotificationDetails platformChannelSpecifics =
-        NotificationDetails(android: androidPlatformChannelSpecifics);
+    int id = messageId.hashCode;
 
     await flutterLocalNotificationsPlugin.show(
       id,
       title,
       newMessage,
-      platformChannelSpecifics,
+      const NotificationDetails(
+          android: AndroidNotificationDetails(channelId, 'com.example.talk',
+              'To inform you of incoming messages.')),
       payload: conversationId,
     );
   }
