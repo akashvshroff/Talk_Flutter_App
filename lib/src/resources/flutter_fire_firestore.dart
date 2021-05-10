@@ -185,6 +185,7 @@ Future<bool> addNewConversationWithConnection(
           user1Doc.data()['active_conversations_array'];
       String username1 = user1Doc.data()['username'];
       String profilePicPath1 = user1Doc.data()['profile_pic_path'];
+      String fcmToken1 = user1Doc.data()['fcm_token'];
 
       if (activeConversationsArray1.contains(conversationId)) {
         toast('A conversation with the user already exists.');
@@ -198,6 +199,7 @@ Future<bool> addNewConversationWithConnection(
           user2Doc.data()['active_conversations_array'];
       String username2 = user2Doc.data()['username'];
       String profilePicPath2 = user2Doc.data()['profile_pic_path'];
+      String fcmToken2 = user2Doc.data()['fcm_token'];
 
       //add common conversationId for both users
       activeConversationsArray1.add(conversationId);
@@ -240,6 +242,8 @@ Future<bool> addNewConversationWithConnection(
       conversationMap['username_2'] = username2;
       conversationMap['profile_pic_path_1'] = profilePicPath1;
       conversationMap['profile_pic_path_2'] = profilePicPath2;
+      conversationMap['fcm_token_1'] = fcmToken1;
+      conversationMap['fcm_token_2'] = fcmToken2;
 
       //create conversation doc
       transaction.set(conversationDocRef, conversationMap);
