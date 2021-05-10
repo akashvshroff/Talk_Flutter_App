@@ -8,6 +8,8 @@ class ConversationModel {
   String username2;
   String profilePicPath1;
   String profilePicPath2;
+  String fcmToken1;
+  String fcmToken2;
   List<MessageModel> messages;
 
   ConversationModel(
@@ -18,7 +20,9 @@ class ConversationModel {
       this.username1,
       this.username2,
       this.profilePicPath1,
-      this.profilePicPath2});
+      this.profilePicPath2,
+      this.fcmToken1,
+      this.fcmToken2});
 
   ConversationModel.fromMap(Map data) {
     this.conversationId = data['conversation_id'];
@@ -29,5 +33,7 @@ class ConversationModel {
     this.profilePicPath1 = data['profile_pic_path_1'];
     this.profilePicPath2 = data['profile_pic_path_2'];
     this.messages = data['messages'];
+    this.fcmToken1 = data['fcm_token_1'];
+    this.fcmToken2 = data['fcm_token_2'];
   }
 }
