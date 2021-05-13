@@ -30,7 +30,7 @@
 
 # Description:
 
-- While it would be a futile effort to try and explain every single component of the build, I have identified a few that I would like to cover in greater detail, namely the [Storage Architecture](https://github.com/akashvshroff/Talk_Flutter_App#storage-architecture), [Notifications](https://github.com/akashvshroff/Talk_Flutter_App#notifications) and the [UI]().
+- While it would be a futile effort to try and explain every single component of the build, I have identified a few that I would like to cover in greater detail, namely the [Storage Architecture](https://github.com/akashvshroff/Talk_Flutter_App#storage-architecture), [Notifications](https://github.com/akashvshroff/Talk_Flutter_App#notifications) and the [UI](https://github.com/akashvshroff/Talk_Flutter_App#notifications).
 
 ## Storage Architecture:
 
