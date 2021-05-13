@@ -18,9 +18,9 @@
 
 - Here are some screenshots that outline the various screens of the application, to see all of them please click [here](https://github.com/akashvshroff/Talk_Flutter_App/tree/master/screenshots) or simply watch the video above to see the app in action.
 
-<img width="225" height="475" src="https://github.com/akashvshroff/Talk_Flutter_App/blob/master/screenshots/talk.jpg"> &nbsp; &nbsp; <img width="225" height="475" src="https://github.com/akashvshroff/Talk_Flutter_App/blob/master/screenshots/signup.jpg"> &nbsp; &nbsp; <img width="225" height="475" src="https://github.com/akashvshroff/Talk_Flutter_App/blob/master/screenshots/add_profile.jpg">
+<img width="225" height="475" src="https://github.com/akashvshroff/Talk_Flutter_App/blob/master/screenshots/talk.jpg"> &nbsp; &nbsp; <img width="225" height="475" src="https://github.com/akashvshroff/Talk_Flutter_App/blob/master/screenshots/signup.png"> &nbsp; &nbsp; <img width="225" height="475" src="https://github.com/akashvshroff/Talk_Flutter_App/blob/master/screenshots/add_profile.png">
 
-<img width="225" height="475" src="https://github.com/akashvshroff/Talk_Flutter_App/blob/master/screenshots/connections.jpg"> &nbsp; &nbsp; <img width="225" height="475" src="https://github.com/akashvshroff/Talk_Flutter_App/blob/master/screenshots/conversations.jpg"> &nbsp; &nbsp; <img width="225" height="475" src="https://github.com/akashvshroff/Talk_Flutter_App/blob/master/screenshots/chat.jpg">
+<img width="225" height="475" src="https://github.com/akashvshroff/Talk_Flutter_App/blob/master/screenshots/connections.png"> &nbsp; &nbsp; <img width="225" height="475" src="https://github.com/akashvshroff/Talk_Flutter_App/blob/master/screenshots/conversations.png"> &nbsp; &nbsp; <img width="225" height="475" src="https://github.com/akashvshroff/Talk_Flutter_App/blob/master/screenshots/chat.png">
 
 # Purpose:
 
