@@ -24,4 +24,8 @@
 
 # Purpose:
 
+- Chat applications are a vital component of our social connections today. They form the very backbone upon which the basic human need to communicate rests on and given their importance and widespread use, I wanted to challenge myself and see whether I could come up with a basic, yet fully functioning chat app. Moreover, building a chat application awarded me another opportunity that I had been eagerly waiting for - a project through which I could learn how to use Google Firebase.
+- The build was more challenging than I had expected since I had to understand how to use Google Firebase as well as how to structure data within the NoSQL Cloud Firestore (more on that later), as well as how to leverage the other features of Firebase such as authentication and Cloud Functions. The end result was incredibly gratifying and helped solidify my understanding of the BLOC approach to state management in Flutter as well as how to build efficient, scalable applications.
+- A detailed description where I examine the different choices I made with regards to my build can be found below.
+
 # Description:
