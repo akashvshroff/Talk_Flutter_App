@@ -30,7 +30,7 @@
 
 # Description:
 
-- While it would be a futile effort to try and explain every single component of the build, I have identified a few that I would like to cover in greater detail, namely the [Storage Architecture](), [Notifications]() and the [UI]().
+- While it would be a futile effort to try and explain every single component of the build, I have identified a few that I would like to cover in greater detail, namely the [Storage Architecture](https://github.com/akashvshroff/Talk_Flutter_App#storage-architecture), [Notifications](https://github.com/akashvshroff/Talk_Flutter_App#notifications) and the [UI]().
 
 ## Storage Architecture:
 
@@ -61,5 +61,23 @@
 - The UI leverages these streams by accessing the BLOC through the [Provider](https://github.com/akashvshroff/Talk_Flutter_App/blob/master/lib/src/blocs/provider.dart) class and implementing StreamBuilders which allow for realtime update of data.
 
 ## Notifications:
+
+- Notifications for the application are handled by three components working in tandem - Cloud Functions for Firebase, Firebase Cloud Messaging and Flutter Local Notifications. To get a better understanding of how to use Cloud Functions and FCM for sending push notifications, I would recommend [this video](https://www.youtube.com/watch?v=2TSm2YGBT1s&ab_channel=Fireship), bear in mind that some of the API features of FCM have since been updated but the [documentation](https://firebase.flutter.dev/docs/messaging/overview) is thorough.
+- Each of these components play a distinct role in the notification process.
+
+### Firebase Cloud Messaging:
+
+- FCM serves as the pipeline for the transfer of messages and it is used to channel messages from the cloud function to the client where it handles a stream of messages for foreground messages (i.e when the app is open) and it is passed a handler for the background messages. You can use FCM to send notifications with a certain title, body as well as some payload to trigger a change. Moreover, you could simply use it to send snippets of data and I would recommend reading the documentation to fully understand how to use it.
+
+### Local Notifications:
+
+- Local Notifications are used to convert the notifications received by the FCM pipeline into 'heads-up' overlay messages - i.e a popup notification that informs the user. These can be appropriately styled and simply serve as the UI element of the notification.
+
+### Cloud Functions:
+
+- Cloud Functions are used to trigger and send notifications - when a change is made to a conversation document and a new message map is added to the messages array, the function will identify the last message and send the notification by calling upon FCM to the client.
+- It can send the message that the client is logged on to through their FCM Token which is a unique identifier for each client. This data is fetched and stored when the user creates their profile.
+
+## UI:
 
 -
