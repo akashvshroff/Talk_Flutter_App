@@ -59,3 +59,7 @@
 
 - The [BLOC](https://github.com/akashvshroff/Talk_Flutter_App/blob/master/lib/src/blocs/bloc.dart) class contains a number of streams and StreamTransformers that are responsible for fetching the data from Cloud Firestore and convert this data into objects of the different local models that have been mentioned above.
 - The UI leverages these streams by accessing the BLOC through the [Provider](https://github.com/akashvshroff/Talk_Flutter_App/blob/master/lib/src/blocs/provider.dart) class and implementing StreamBuilders which allow for realtime update of data.
+
+## Notifications:
+
+-
