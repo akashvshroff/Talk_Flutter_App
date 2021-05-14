@@ -80,4 +80,5 @@
 
 ## UI:
 
--
+- The UI for this build follows a very clean and minimal approach with accents of colour to provide relief. Inspiration (and the primary idea that led to this build) came from a [FreeCodeCamp article](https://www.freecodecamp.org/news/build-a-chat-app-ui-with-flutter/) and I have since tweaked a number of the UI elements whilst adding the backend features.
+- The rest of the UI is fairly self explanatory in terms of the Widgets used. I would be more than happy to answer any queries regarding the build process with respect to the UI.
